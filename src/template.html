@@ -1,0 +1,1161 @@
+<title>Brick by Brick</title>
+<meta name="description" content="Every piece in 18,000 LEGO sets, counted by colour and year. The classic six colours went from 89% of the bricks to 40%, the palette doubled and was cut back, and the greys changed overnight.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+:root{
+  --page:#ECE7DD; --stud:#E1DACD; --studhi:#F6F2EA;
+  --card:#FFFFFF; --sunk:#F4F1EA;
+  --ink:#1B1A18; --ink2:#48453F; --ink3:#77736A; --rule:#DAD4C8;
+  --callout:#DCEAF5; --calloutRule:#9DBBD6;
+  --red:#C91A09; --yellow:#F2CD37; --blue:#0055BF; --green:#237841;
+  --hard:#1B1A18; --tipbg:#1B1A18; --tipink:#F7F4EE;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --page:#17191C; --stud:#1F2226; --studhi:#292D32;
+  --card:#23262B; --sunk:#1C1F23;
+  --ink:#F1EEE8; --ink2:#C2BDB3; --ink3:#8E897F; --rule:#3A3E45;
+  --callout:#1D2D3B; --calloutRule:#3C6285;
+  --red:#E5503C; --yellow:#F2CD37; --blue:#5C9DF0; --green:#58B26F;
+  --hard:#050607; --tipbg:#F1EEE8; --tipink:#17191C;
+}}
+:root[data-theme="dark"]{
+  --page:#17191C; --stud:#1F2226; --studhi:#292D32;
+  --card:#23262B; --sunk:#1C1F23;
+  --ink:#F1EEE8; --ink2:#C2BDB3; --ink3:#8E897F; --rule:#3A3E45;
+  --callout:#1D2D3B; --calloutRule:#3C6285;
+  --red:#E5503C; --yellow:#F2CD37; --blue:#5C9DF0; --green:#58B26F;
+  --hard:#050607; --tipbg:#F1EEE8; --tipink:#17191C;
+}
+*{box-sizing:border-box}
+html{background:var(--page)}
+body{margin:0;color:var(--ink);font:400 16.5px/1.6 Nunito,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+  background-color:var(--page);
+  background-image:
+    radial-gradient(circle at 10px 10px, var(--studhi) 0 3px, transparent 3.6px),
+    radial-gradient(circle at 12px 12px, var(--stud) 0 7px, transparent 7.6px);
+  background-size:24px 24px;}
+h1,h2,h3{font-family:Fredoka,Nunito,system-ui,sans-serif;font-weight:600;margin:0;line-height:1.08;text-wrap:balance}
+p{margin:0}
+a{color:var(--blue);text-underline-offset:3px}
+:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.num{font-variant-numeric:tabular-nums}
+b,strong{font-weight:800}
+
+#stage{position:fixed;inset:0;width:100vw;height:100vh;z-index:0;pointer-events:none;display:block}
+.wrap{position:relative;z-index:1;max-width:1140px;margin:0 auto;padding-inline:clamp(16px,4vw,40px);padding-block:0 60px}
+
+/* ---- plates: a card with studs along its top edge ---- */
+.plate{position:relative;background:var(--card);border:3px solid var(--ink);border-radius:10px;
+  box-shadow:7px 7px 0 var(--hard);padding:clamp(18px,3vw,34px);margin-top:26px}
+.plate::before{content:"";position:absolute;left:22px;right:22px;top:-12px;height:10px;pointer-events:none;
+  background:
+    linear-gradient(to right, transparent 9px, var(--card) 9px 25px, transparent 25px) 0 3px/34px 7px repeat-x,
+    linear-gradient(to right, transparent 6px, var(--ink) 6px 28px, transparent 28px) 0 0/34px 10px repeat-x;}
+.plate.yellow{background:var(--yellow);color:#1B1A18}
+.plate.yellow::before{background:
+    linear-gradient(to right, transparent 9px, var(--yellow) 9px 25px, transparent 25px) 0 3px/34px 7px repeat-x,
+    linear-gradient(to right, transparent 6px, var(--ink) 6px 28px, transparent 28px) 0 0/34px 10px repeat-x;}
+.plate.yellow a{color:#0B3E8A}
+
+/* ---- hero ---- */
+.hero{min-height:min(88vh,820px);display:flex;flex-direction:column;justify-content:center;padding-block:48px 24px}
+.hero .plate{max-width:600px}
+.eyebrow{font:700 12px/1.3 Nunito,sans-serif;letter-spacing:.14em;text-transform:uppercase}
+h1{font-size:clamp(52px,9vw,104px);font-weight:700;letter-spacing:-.01em;margin:10px 0 14px}
+.dek{font-size:clamp(17px,2vw,20px);line-height:1.5;max-width:34em}
+.hero .facts{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.fact{background:#fff;color:#1B1A18;border:2.5px solid #1B1A18;border-radius:8px;padding:6px 12px;font-weight:700;font-size:14px}
+.fact b{font-family:Fredoka,sans-serif;font-size:19px;font-weight:600;margin-right:4px}
+.scrollhint{margin-top:26px;font-weight:700;font-size:14px;display:flex;gap:10px;align-items:center;color:var(--ink2);
+  align-self:flex-start;background:var(--card);border:2.5px solid var(--ink);border-radius:999px;padding:5px 14px 5px 5px}
+.scrollhint .arrow{display:inline-block;width:30px;height:30px;border:3px solid var(--ink);border-radius:50%;text-align:center;line-height:23px;background:var(--card);color:var(--ink)}
+
+/* ---- steps (instruction booklet) ---- */
+.stephead{display:flex;gap:18px;align-items:flex-start;margin-bottom:18px}
+.stepno{flex:none;font:700 clamp(46px,6vw,68px)/.9 Fredoka,sans-serif;min-width:.8em;text-align:center}
+.stephead h2{font-size:clamp(26px,3.4vw,38px);margin-top:4px}
+.stephead .sub{color:var(--ink2);margin-top:6px;font-size:16px;max-width:46em}
+.prose{max-width:46em;display:grid;gap:12px;color:var(--ink)}
+.prose p{color:var(--ink2)}
+.prose p b{color:var(--ink)}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:28px;align-items:start}
+@media(max-width:880px){.cols{grid-template-columns:1fr}}
+
+.callout{background:var(--callout);border:2.5px solid var(--calloutRule);border-radius:10px;padding:14px 16px}
+.callout h3{font:700 12px/1.2 Nunito,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--ink2);margin-bottom:10px}
+.partrow{display:flex;align-items:center;gap:10px;padding:5px 0}
+.partrow + .partrow{border-top:1px dashed var(--calloutRule)}
+.partrow .x{font:600 20px/1 Fredoka,sans-serif;min-width:3.6em;text-align:right;font-variant-numeric:tabular-nums}
+.partrow .x small{font:700 12px Nunito,sans-serif;color:var(--ink3)}
+.partrow .nm{font-size:14px;line-height:1.25;color:var(--ink2)}
+.partrow .nm b{color:var(--ink)}
+.arrowto{font:600 16px Fredoka,sans-serif;color:var(--ink3);padding:0 2px}
+
+.brick{--c:#999;flex:none;position:relative;width:34px;height:22px;border-radius:3px;background:var(--c);
+  box-shadow:inset 0 -3px 0 rgba(0,0,0,.22), inset 0 2px 0 rgba(255,255,255,.28), 0 0 0 1.5px rgba(0,0,0,.35);margin-top:6px}
+.brick::before,.brick::after{content:"";position:absolute;top:-6px;width:10px;height:6px;border-radius:2px 2px 0 0;background:var(--c);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.3), 0 0 0 1.5px rgba(0,0,0,.35)}
+.brick::before{left:5px}.brick::after{right:5px}
+.brick.sm{width:22px;height:14px;margin-top:4px}
+.brick.sm::before,.brick.sm::after{top:-4px;width:6px;height:4px}
+.brick.sm::before{left:3px}.brick.sm::after{right:3px}
+
+/* ---- controls: brick buttons ---- */
+.toolbar{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:4px 0 16px}
+.seg{display:inline-flex;gap:8px;align-items:center;flex-wrap:wrap}
+.seg .lbl{font-weight:700;font-size:13px;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-right:2px}
+.bbtn{font:700 14px/1 Nunito,sans-serif;color:#1B1A18;background:var(--sunk);border:2.5px solid var(--ink);border-radius:6px;
+  padding:9px 13px 8px;cursor:pointer;box-shadow:0 4px 0 var(--ink);transform:translateY(0);transition:transform .08s, box-shadow .08s;color:var(--ink)}
+.bbtn:hover{background:var(--card)}
+.bbtn[aria-pressed="true"]{background:var(--yellow);color:#1B1A18;transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+.bbtn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--ink)}
+
+/* ---- charts ---- */
+.chart{position:relative;width:100%}
+.chart canvas{display:block;width:100%}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:14px;color:var(--ink2);margin:6px 0 10px}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+.legend i{display:inline-block;width:14px;height:14px;border-radius:3px;box-shadow:0 0 0 1.5px rgba(0,0,0,.35)}
+.legend i.dash{width:22px;height:0;border-top:2.5px dashed var(--ink3);box-shadow:none;border-radius:0}
+.legend i.solid{width:22px;height:0;border-top:2.5px solid var(--ink);box-shadow:none;border-radius:0}
+.note{font-size:13.5px;color:var(--ink3);margin-top:10px}
+.multiples{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+@media(max-width:760px){.multiples{grid-template-columns:1fr}}
+.mini h3{font:700 15px/1.2 Nunito,sans-serif;display:flex;gap:8px;align-items:center;margin-bottom:4px}
+.scrollx{overflow-x:auto}
+
+#tip{position:fixed;z-index:50;pointer-events:none;background:var(--tipbg);color:var(--tipink);border-radius:8px;padding:9px 11px;
+  font-size:13px;line-height:1.35;max-width:280px;box-shadow:4px 4px 0 rgba(0,0,0,.25);opacity:0;transition:opacity .08s}
+#tip.on{opacity:1}
+#tip .t{font:600 16px Fredoka,sans-serif;margin-bottom:4px}
+#tip .r{display:flex;gap:7px;align-items:center;white-space:nowrap}
+#tip .r i{width:11px;height:11px;border-radius:2px;flex:none;box-shadow:0 0 0 1px rgba(128,128,128,.6)}
+#tip .r .v{margin-left:auto;padding-left:12px;font-variant-numeric:tabular-nums;font-weight:700}
+#tip .m{opacity:.72}
+
+/* interludes: gaps where the build shows through */
+.gap{height:34vh;min-height:180px;display:flex;align-items:center}
+.gap.short{height:18vh;min-height:110px}
+
+/* themes */
+.themes{display:grid;gap:7px}
+.trow{display:grid;grid-template-columns:190px minmax(0,1fr) 58px;gap:12px;align-items:center}
+.trow .tn{font-weight:700;font-size:14.5px;line-height:1.15}
+.trow .tn small{display:block;font-weight:600;font-size:12px;color:var(--ink3)}
+.strip{display:flex;height:24px;border-radius:4px;overflow:hidden;border:2px solid var(--ink);background:var(--ink)}
+.strip span{display:block;height:100%;box-shadow:inset -1px 0 0 rgba(0,0,0,.28)}
+.strip span.rest{background:repeating-linear-gradient(135deg,var(--sunk) 0 3px,var(--rule) 3px 6px)}
+.trow .gv{text-align:right;font:600 17px Fredoka,sans-serif;font-variant-numeric:tabular-nums}
+.trow .gv small{display:block;font:700 10.5px Nunito,sans-serif;color:var(--ink3);letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:620px){.trow{grid-template-columns:1fr 52px}.trow .tn{grid-column:1/-1}.trow .strip{grid-column:1}}
+
+/* set finder */
+.finder{display:grid;grid-template-columns:320px minmax(0,1fr);gap:24px;align-items:start}
+@media(max-width:900px){.finder{grid-template-columns:1fr}}
+.search{width:100%;font:700 16px Nunito,sans-serif;padding:11px 13px;border:2.5px solid var(--ink);border-radius:8px;background:var(--sunk);color:var(--ink)}
+.results{margin-top:10px;display:grid;gap:4px;max-height:430px;overflow:auto;padding-right:4px}
+.res{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px;align-items:center;border:2px solid transparent;border-radius:8px;padding:6px 8px;background:var(--sunk)}
+.res:hover{border-color:var(--rule)}
+.res.sel{border-color:var(--ink)}
+.res button.main{all:unset;cursor:pointer;display:block;min-width:0}
+.res button.main:focus-visible{outline:3px solid var(--blue)}
+.res .rn{font-weight:700;font-size:14px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.res .rm{font-size:12px;color:var(--ink3)}
+.res .mini-strip{display:flex;height:6px;border-radius:2px;overflow:hidden;margin-top:4px}
+.res .mini-strip span{height:100%}
+.res .cmp{font:700 12px Nunito,sans-serif;border:2px solid var(--ink);border-radius:5px;background:var(--card);color:var(--ink);padding:4px 7px;cursor:pointer}
+.pairs{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+.slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+@media(max-width:700px){.slots{grid-template-columns:1fr}}
+.slot{border:2.5px dashed var(--rule);border-radius:10px;padding:14px;min-height:200px}
+.slot.full{border-style:solid;border-color:var(--ink);background:var(--card)}
+.slot .sh{font:600 21px/1.1 Fredoka,sans-serif}
+.slot .sm{font-size:13px;color:var(--ink3);margin:4px 0 10px}
+.slot canvas{display:block;width:100%;margin:6px 0 10px}
+.slot .stat{font-size:13.5px;color:var(--ink2);margin-bottom:8px}
+.slot .plist{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:2px 12px;max-height:210px;overflow:auto}
+.slot .pl{display:flex;align-items:center;gap:7px;font-size:12.5px;line-height:1.2;padding:3px 0}
+.slot .pl b{font:600 14px Fredoka,sans-serif;min-width:2.8em;text-align:right;font-variant-numeric:tabular-nums}
+.slot .empty{color:var(--ink3);font-size:14px}
+.slot .clear{float:right;font:700 12px Nunito,sans-serif;border:2px solid var(--ink);border-radius:5px;background:var(--sunk);color:var(--ink);padding:3px 7px;cursor:pointer}
+
+.methods ul{margin:0;padding-left:1.2em;display:grid;gap:8px;color:var(--ink2)}
+.methods li b{color:var(--ink)}
+details.tbl{margin-top:14px}
+details.tbl summary{cursor:pointer;font-weight:700;font-size:14px;color:var(--ink2)}
+details.tbl table{border-collapse:collapse;font-size:13px;margin-top:8px;font-variant-numeric:tabular-nums}
+details.tbl th,details.tbl td{padding:4px 10px;border-bottom:1px solid var(--rule);text-align:right}
+details.tbl th:first-child,details.tbl td:first-child{text-align:left}
+
+/* build HUD */
+.hud{position:fixed;left:14px;bottom:14px;z-index:5;display:flex;gap:8px;align-items:center;background:var(--card);border:2.5px solid var(--ink);
+  border-radius:9px;padding:6px 8px 6px 11px;box-shadow:4px 4px 0 var(--hard);font-size:12.5px;font-weight:700;max-width:calc(100vw - 28px)}
+.hud .sw{display:flex;gap:3px}
+.hud .sw i{width:12px;height:12px;border-radius:2px;box-shadow:0 0 0 1.2px rgba(0,0,0,.4)}
+.hud button{font:700 12px Nunito,sans-serif;border:2px solid var(--ink);border-radius:5px;background:var(--sunk);color:var(--ink);padding:3px 7px;cursor:pointer}
+.hud[hidden]{display:none!important}
+@media(max-width:560px){.hud .era-text{display:none}}
+
+footer{margin-top:34px;font-size:13.5px;color:var(--ink2)}
+footer .plate{padding:18px 22px}
+</style>
+
+<canvas id="stage" aria-hidden="true"></canvas>
+<div id="tip" role="tooltip"></div>
+<div class="hud" id="hud" hidden>
+  <span class="era-text">House in <span id="eraName">1978</span> colours</span>
+  <span class="sw" id="eraSw"></span>
+  <button type="button" id="hudToggle" aria-pressed="true">3D on</button>
+</div>
+
+<div class="wrap">
+
+<header class="hero" data-era="1978">
+  <div class="plate yellow">
+    <div class="eyebrow">A colour census of LEGO® sets · <span data-k="yearspan"></span></div>
+    <h1>Brick by Brick</h1>
+    <p class="dek">Every piece in <b data-k="nsets"></b> sets, counted by colour and by year. Red, yellow, blue, white, black and green were <b data-k="classic1970">—</b> of the pieces in the 1970s and are <b data-k="classic2020">—</b> now. The palette grew to more than fifty colours, was cut back hard, and in 2004 the greys were replaced almost overnight.</p>
+    <div class="facts">
+      <span class="fact"><b data-k="npieces"></b>pieces</span>
+      <span class="fact"><b data-k="ncolours"></b>colours</span>
+      <span class="fact"><b data-k="nyears"></b>years</span>
+    </div>
+  </div>
+  <div class="scrollhint"><span class="arrow">↓</span> Scroll to build. The house behind the page repaints itself in each era's colours.</div>
+</header>
+
+<section class="plate" id="wall" data-era="1978" aria-labelledby="wallTitle">
+  <div class="stephead">
+    <div>
+      <h2 id="wallTitle">Every year's bricks, poured into one column</h2>
+      <p class="sub">Each column is one release year, split into 30 studs by share of colour. Greys sit at the bottom, then the classic six, then earth tones, then everything else. Hover a column for its full mix.</p>
+    </div>
+  </div>
+  <div class="toolbar">
+    <div class="seg" role="group" aria-label="Weighting">
+      <span class="lbl">Count</span>
+      <button class="bbtn" data-weight="pieces" aria-pressed="true">every piece</button>
+      <button class="bbtn" data-weight="sets" aria-pressed="false">every set equally</button>
+    </div>
+  </div>
+  <div class="scrollx"><div class="chart" style="min-width:640px"><canvas id="wallCanvas" role="img" aria-label="Mosaic of LEGO colour shares by year"></canvas></div></div>
+  <p class="note">Faded columns come from fewer than 20 sets. <span data-k="partialNote"></span> Counting pieces lets big sets dominate; counting sets equally gives each box one vote.</p>
+</section>
+
+<div class="gap" data-era="1990"></div>
+
+<section class="plate" id="step1" data-era="2003" aria-labelledby="s1">
+  <div class="stephead">
+    <div class="stepno">1</div>
+    <div>
+      <h2 id="s1">The greys changed overnight</h2>
+      <p class="sub">In 2004 LEGO replaced its old greys with slightly blue-tinted ones, and swapped Brown for Reddish Brown at the same time. Fans have called the new greys "bley" ever since.</p>
+    </div>
+  </div>
+  <div class="cols">
+    <div class="prose">
+      <p>Old <b>Light Gray</b> and <b>Dark Gray</b> were <b data-k="og2003">—</b> of all pieces in 2003 sets. In 2004 they were <b data-k="og2004">—</b>, and <b data-k="og2006">—</b> by 2006. The bluish greys went from <b data-k="ng2003">—</b> to <b data-k="ng2005">—</b> over the same two years. <b>Brown</b> followed the same path: it was <b data-k="br2003">—</b> of pieces in 2003 and gone after <b data-k="brLast">—</b>.</p>
+      <p>The swap is easy to miss. The old Light Gray and the new Light Bluish Gray are only a few shades apart, but builders with old collections could no longer match a wall. The house behind this page makes the same swap when you scroll past the charts.</p>
+    </div>
+    <div class="callout" data-era="2005">
+      <h3>Parts swapped</h3>
+      <div id="swapParts"></div>
+    </div>
+  </div>
+  <div class="legend" style="margin-top:22px"><span><i class="dash"></i>old colour</span><span><i class="solid"></i>its replacement</span><span style="color:var(--ink3)">share of all pieces in that year's sets</span></div>
+  <div class="multiples" data-era="2005">
+    <div class="mini"><h3><span class="brick sm" style="--c:#9BA19D"></span>→<span class="brick sm" style="--c:#A0A5A9"></span>Light greys</h3><div class="chart"><canvas id="lineLight"></canvas></div></div>
+    <div class="mini"><h3><span class="brick sm" style="--c:#6D6E5C"></span>→<span class="brick sm" style="--c:#6C6E68"></span>Dark greys</h3><div class="chart"><canvas id="lineDark"></canvas></div></div>
+    <div class="mini"><h3><span class="brick sm" style="--c:#583927"></span>→<span class="brick sm" style="--c:#582A12"></span>Browns</h3><div class="chart"><canvas id="lineBrown"></canvas></div></div>
+  </div>
+  <p class="note">Some new-grey pieces show up in 2003 because a set's year is its release year, and sets released late in 2003 already used the new colours.</p>
+</section>
+
+<div class="gap" data-era="2005"></div>
+
+<section class="plate" id="step2" data-era="2005" aria-labelledby="s2">
+  <div class="stephead">
+    <div class="stepno">2</div>
+    <div>
+      <h2 id="s2">The palette grew, then got cut back</h2>
+      <p class="sub">Each bar stacks one small brick for every colour that made up at least 0.1% of that year's pieces. Below the line, each stud is a colour: new colours rise above the axis in the year they first appeared, and retired ones hang below it in their last year.</p>
+    </div>
+  </div>
+  <div class="cols">
+    <div class="prose">
+      <p>Through the 1970s a year's sets used about <b data-k="pal1970">—</b> colours that mattered. By <b data-k="palPeakYear">—</b> there were <b data-k="palPeak">—</b>. <b data-k="palAddedYears">—</b> colours first appeared between 1998 and 2004.</p>
+      <p>Then LEGO cut the list. By <b data-k="palLowYear">—</b> it was down to <b data-k="palLow">—</b>, and <b data-k="palRetired">—</b> colours made their last appearance between 2004 and 2008. Since then the count has climbed back to <b data-k="palNow">—</b> in <b data-k="lastFull">—</b>, <span data-k="palSince">close to the old peak</span>. The additions since 2010 are a different mix: Medium Nougat, the azures, the lavenders, and later Coral.</p>
+    </div>
+    <div class="callout">
+      <h3>Colours in use</h3>
+      <div id="palParts"></div>
+    </div>
+  </div>
+  <div class="scrollx" style="margin-top:18px"><div class="chart" style="min-width:640px"><canvas id="palCanvas" role="img" aria-label="Colours in use per year, with arrivals and retirements"></canvas></div></div>
+  <p class="note">Arrivals and retirements only count colours with at least 100 pieces across all sets. A colour whose last year is 2024 or later is treated as still in use.</p>
+</section>
+
+<div class="gap" data-era="2005"></div>
+
+<section class="plate" id="step3" data-era="2024" aria-labelledby="s3">
+  <div class="stephead">
+    <div class="stepno">3</div>
+    <div>
+      <h2 id="s3">The primary colours faded</h2>
+      <p class="sub">The same columns as the wall, grouped into six colour families.</p>
+    </div>
+  </div>
+  <div class="prose">
+    <p>For its first four decades LEGO was mostly the classic six: <b data-k="classic1970">—</b> of 1970s pieces were red, yellow, blue, white, black or green. In the 2020s that is <b data-k="classic2020">—</b>. Greys peaked at <b data-k="grey2010">—</b> of pieces in the 2010s. Earth tones (tan, browns and nougats) went from almost nothing to <b data-k="earth2020">—</b>. The fastest growth is in "everything else": <b data-k="other2020">—</b> of 2020s pieces are colours like lime, azure, coral and sand green.</p>
+  </div>
+  <div class="toolbar" style="margin-top:16px">
+    <div class="seg" role="group" aria-label="Weighting">
+      <span class="lbl">Count</span>
+      <button class="bbtn" data-weight="pieces" aria-pressed="true">every piece</button>
+      <button class="bbtn" data-weight="sets" aria-pressed="false">every set equally</button>
+    </div>
+  </div>
+  <div class="legend" id="famLegend"></div>
+  <div class="scrollx"><div class="chart" style="min-width:640px"><canvas id="famCanvas" role="img" aria-label="Colour family shares by year"></canvas></div></div>
+  <details class="tbl"><summary>Table: family shares by decade</summary><div class="scrollx"><table id="famTable"></table></div></details>
+</section>
+
+<div class="gap" data-era="2024"></div>
+
+<section class="plate" id="step4" data-era="2024" aria-labelledby="s4">
+  <div class="stephead">
+    <div class="stepno">4</div>
+    <div>
+      <h2 id="s4">Every theme has its own palette</h2>
+      <p class="sub">All pieces ever released in a theme, as one strip of colours. The number on the right is the share of greys. Themes with fewer than 40 sets, and catch-alls like Promotional or Seasonal, are left out.</p>
+    </div>
+  </div>
+  <div class="prose">
+    <p><b data-k="greyestTheme">—</b> is the greyest theme: <b data-k="greyestShare">—</b> of its pieces are grey. <b data-k="leastGreyTheme">—</b> uses the least grey, at <b data-k="leastGreyShare">—</b>. The themes that stayed closest to the classic six are <b data-k="primaryThemes">—</b>.</p>
+  </div>
+  <div class="toolbar" style="margin-top:16px">
+    <div class="seg" role="group" aria-label="Sort themes">
+      <span class="lbl">Sort</span>
+      <button class="bbtn" data-sort="grey" aria-pressed="true">greyest</button>
+      <button class="bbtn" data-sort="classic" aria-pressed="false">most classic</button>
+      <button class="bbtn" data-sort="variety" aria-pressed="false">most colourful</button>
+      <button class="bbtn" data-sort="from" aria-pressed="false">oldest</button>
+    </div>
+  </div>
+  <div class="themes" id="themes"></div>
+  <p class="note">"Most colourful" ranks by the effective number of colours: how many equally used colours would give the same variety.</p>
+</section>
+
+<div class="gap short" data-era="2024"></div>
+
+<section class="plate" id="step5" data-era="2024" aria-labelledby="s5">
+  <div class="stephead">
+    <div class="stepno">5</div>
+    <div>
+      <h2 id="s5">Tip out any set</h2>
+      <p class="sub">Search by name or set number. The tray shows the set's colours scaled to 400 studs at most, with the full parts count by colour underneath. Use <b>compare</b> to put a second set beside it.</p>
+    </div>
+  </div>
+  <div class="pairs" id="pairs"></div>
+  <div class="finder">
+    <div>
+      <label for="q" class="eyebrow" style="color:var(--ink3);display:block;margin-bottom:6px">Find a set</label>
+      <input id="q" class="search" type="search" placeholder="Castle, 6080, Millennium Falcon…" autocomplete="off">
+      <div class="results" id="results" aria-live="polite"></div>
+    </div>
+    <div class="slots">
+      <div class="slot" id="slotA"></div>
+      <div class="slot" id="slotB"></div>
+    </div>
+  </div>
+</section>
+
+<section class="plate methods" aria-labelledby="mt">
+  <h2 id="mt" style="font-size:28px;margin-bottom:14px">How this was counted</h2>
+  <ul>
+    <li><b>Source.</b> Rebrickable's public database of official LEGO sets and their parts lists, downloaded <span data-k="built"></span>. It is maintained by fans. Parts lists are often checked against the building instructions, but not always.</li>
+    <li><b>What counts as a piece.</b> Every non-spare part in each set's first inventory. Minifigures are separate inventories on Rebrickable and are not included, so yellow heads and torsos are missing.</li>
+    <li><b>What is left out.</b> Books, gear, service packs, Modulex (an architectural modelling system, not a toy), and parts with unknown colour. <span data-k="nsetsAll"></span> sets remain.</li>
+    <li><b>Years</b> are release years as Rebrickable records them. <span data-k="partialNote"></span> Before 1958 there are few sets, so those columns are faded.</li>
+    <li><b>Sets, not sales.</b> A set sold once and a set sold millions of times count the same. This is the palette LEGO designed with, not the palette in anyone's toy box.</li>
+    <li><b>Colour names</b> are Rebrickable's, not LEGO's internal names. Colour families are this page's own grouping; the pipeline lists them.</li>
+    <li><b>The house</b> behind the page is illustrative. Its colours for each era were picked by hand from colours common in that period.</li>
+  </ul>
+</section>
+
+<footer>
+  <div class="plate">
+    Data: <a href="https://rebrickable.com/downloads/">Rebrickable</a> LEGO catalogue downloads, which may be used for any purpose with acknowledgement.
+    LEGO® is a trademark of the LEGO Group, which does not sponsor, authorise or endorse this page.
+    3D rendering with <a href="https://threejs.org/">three.js</a>. Built <span data-k="built"></span>.
+  </div>
+</footer>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+"use strict";
+const DATA = __DATA__;
+const REDUCED = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const fmt = n => n.toLocaleString("en-US");
+const pct = (v, d = 0) => (v * 100).toFixed(d) + "%";
+
+/* ---------------- data ---------------- */
+const C = DATA.colours;
+C.forEach((c, i) => { c.i = i; c.hex = "#" + c.rgb; });
+const byName = Object.fromEntries(C.map(c => [c.name, c]));
+const Y = DATA.years;
+const FIRST = DATA.firstYear, LAST = DATA.lastYear, LASTFULL = DATA.partialYear - 1;
+const yrow = y => Y[y - FIRST];
+
+function b64(str, Type) {
+  const bin = atob(str), buf = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+  return new Type(buf.buffer);
+}
+const T = DATA.setsTable;
+const S = {
+  num: T.num.split("\n"), name: T.name.split("\n"),
+  year: b64(T.year, Uint8Array), theme: b64(T.theme, Uint16Array),
+  off: b64(T.off, Uint32Array), ci: b64(T.ci, Uint16Array), qty: b64(T.qty, Uint16Array),
+};
+S.n = S.num.length;
+S.parts = i => { const out = []; for (let k = S.off[i]; k < S.off[i + 1]; k++) out.push([S.ci[k], S.qty[k]]); return out; };
+
+let WEIGHT = "pieces";
+/* share of colour index -> value in a year row, honouring the weighting */
+function yearShares(row, weight = WEIGHT) {
+  const m = new Map();
+  if (!row || !row.sets) return m;
+  if (weight === "pieces") for (const [i, p] of row.c) m.set(i, p / row.pieces);
+  else { let t = 0; for (const c of row.c) t += c[2]; for (const [i, , s] of row.c) m.set(i, s / t); }
+  return m;
+}
+const FAMS = [
+  { k: "classic", short: "Classic", label: "Classic six", col: "#C91A09" },
+  { k: "grey", short: "Greys", label: "Greys", col: "#A0A5A9" },
+  { k: "earth", short: "Earth", label: "Earth tones", col: "#7C4A2A" },
+  { k: "other", short: "Other", label: "Everything else", col: "#36AEBF" },
+  { k: "shiny", short: "Shiny", label: "Pearl, chrome & metallic", col: "#DBAC34" },
+  { k: "trans", short: "Trans", label: "Transparent", col: "#CDEFF0" },
+];
+function famShares(rows, weight = WEIGHT) {
+  const acc = Object.fromEntries(FAMS.map(f => [f.k, 0])); let tot = 0;
+  for (const row of rows) {
+    if (!row.sets) continue;
+    for (const [i, p, s] of row.c) { const v = weight === "pieces" ? p : s; acc[C[i].fam] += v; tot += v; }
+  }
+  for (const k in acc) acc[k] = tot ? acc[k] / tot : 0;
+  return acc;
+}
+const decadeRows = d => Y.filter(r => r.y >= d && r.y < d + 10 && r.y <= LAST);
+function shareOf(y, names) {
+  const r = yrow(y); let v = 0;
+  for (const [i, p] of r.c) if (names.includes(C[i].name)) v += p;
+  return v / r.pieces;
+}
+const MEANINGFUL = 0.001;
+const palCount = r => r.pieces ? r.c.filter(c => c[1] / r.pieces >= MEANINGFUL).length : 0;
+
+/* ---------------- headline numbers ---------------- */
+const K = {};
+(function computeK() {
+  let pieces = 0; Y.forEach(r => pieces += r.pieces);
+  K.nsets = fmt(S.n); K.nsetsAll = fmt(S.n); K.npieces = (pieces / 1e6).toFixed(1) + "M";
+  K.ncolours = String(C.length); K.nyears = String(LAST - FIRST + 1);
+  K.yearspan = `${FIRST}–${LAST}`; K.built = DATA.built; K.lastFull = String(LASTFULL);
+  K.partialNote = `${LAST} is only partly through, so its column is incomplete.`;
+  const f70 = famShares(decadeRows(1970), "pieces"), f20 = famShares(decadeRows(2020), "pieces"), f10 = famShares(decadeRows(2010), "pieces");
+  K.classic1970 = pct(f70.classic); K.classic2020 = pct(f20.classic);
+  K.grey2010 = pct(f10.grey); K.earth2020 = pct(f20.earth); K.other2020 = pct(f20.other);
+  const OG = ["Light Gray", "Dark Gray"], NG = ["Light Bluish Gray", "Dark Bluish Gray"];
+  K.og2003 = pct(shareOf(2003, OG), 1); K.og2004 = pct(shareOf(2004, OG), 1); K.og2006 = pct(shareOf(2006, OG), 1);
+  K.ng2003 = pct(shareOf(2003, NG), 1); K.ng2005 = pct(shareOf(2005, NG), 1);
+  K.br2003 = pct(shareOf(2003, ["Brown"]), 1); K.brLast = String(byName["Brown"].last);
+  // palette size
+  const counts = Y.filter(r => r.y <= LASTFULL).map(r => [r.y, palCount(r)]);
+  const avg = (a, b) => { const xs = counts.filter(c => c[0] >= a && c[0] <= b); return xs.reduce((s, c) => s + c[1], 0) / xs.length; };
+  K.pal1970 = String(Math.round(avg(1970, 1979)));
+  // the first boom: highest count before 2011 (the palette has since grown past it)
+  const peak = counts.filter(c => c[0] <= 2010).reduce((m, c) => c[1] > m[1] ? c : m);
+  K.palPeakYear = String(peak[0]); K.palPeak = String(peak[1]);
+  const after = counts.filter(c => c[0] > peak[0] && c[0] <= peak[0] + 8);
+  const low = after.reduce((m, c) => c[1] < m[1] ? c : m);
+  K.palLowYear = String(low[0]); K.palLow = String(low[1]);
+  K.palNow = String(counts[counts.length - 1][1]);
+  const now = counts[counts.length - 1][1];
+  K.palSince = now > peak[1] ? "past the old peak" : now >= peak[1] - 3 ? "close to the old peak" : "still short of the old peak";
+  const big = C.filter(c => c.pieces >= 100);
+  K.palAddedYears = String(big.filter(c => c.first >= 1998 && c.first <= 2004).length);
+  K.palRetired = String(big.filter(c => c.last >= 2004 && c.last <= 2008).length);
+  K.counts = counts; K.peak = peak; K.low = low;
+})();
+
+/* ---------------- tooltip ---------------- */
+const tip = $("#tip");
+function showTip(html, x, y) {
+  tip.innerHTML = html; tip.classList.add("on");
+  const r = tip.getBoundingClientRect(), pad = 14;
+  let tx = x + pad, ty = y + pad;
+  if (tx + r.width > innerWidth - 8) tx = x - r.width - pad;
+  if (ty + r.height > innerHeight - 8) ty = y - r.height - pad;
+  tip.style.left = Math.max(8, tx) + "px"; tip.style.top = Math.max(8, ty) + "px";
+}
+const hideTip = () => tip.classList.remove("on");
+const tipRow = (hex, label, val, cls = "") => `<div class="r ${cls}"><i style="background:${hex}"></i>${label}<span class="v">${val}</span></div>`;
+
+/* ---------------- canvas helpers ---------------- */
+function fitCanvas(cv, h) {
+  const dpr = Math.min(devicePixelRatio || 1, 2), w = cv.parentElement.clientWidth;
+  cv.style.height = h + "px"; cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr);
+  const g = cv.getContext("2d"); g.setTransform(dpr, 0, 0, dpr, 0, 0); return [g, w];
+}
+function shade(hex, amt) {
+  const n = parseInt(hex.slice(1), 16); let r = n >> 16, g = (n >> 8) & 255, b = n & 255;
+  const f = v => Math.max(0, Math.min(255, Math.round(amt < 0 ? v * (1 + amt) : v + (255 - v) * amt)));
+  return `rgb(${f(r)},${f(g)},${f(b)})`;
+}
+/* one top-down 1x1 plate: square, with a stud */
+function studCell(g, x, y, s, hex, alpha = 1) {
+  g.globalAlpha = alpha;
+  g.fillStyle = hex; g.fillRect(x, y, s, s);
+  g.fillStyle = shade(hex, -0.22); g.fillRect(x, y + s - Math.max(1, s * .08), s, Math.max(1, s * .08));
+  g.fillRect(x + s - Math.max(1, s * .08), y, Math.max(1, s * .08), s);
+  if (s >= 7) {
+    const cx = x + s / 2, cy = y + s / 2, r = s * 0.32;
+    g.fillStyle = shade(hex, -0.18); g.beginPath(); g.arc(cx + s * .05, cy + s * .06, r, 0, 7); g.fill();
+    g.fillStyle = hex; g.beginPath(); g.arc(cx, cy, r, 0, 7); g.fill();
+    g.fillStyle = shade(hex, 0.32); g.beginPath(); g.arc(cx - r * .3, cy - r * .3, r * .38, 0, 7); g.fill();
+  }
+  g.globalAlpha = 1;
+}
+/* largest remainder allocation of n cells across [idx, share] pairs, keeping order */
+function allocate(pairs, n) {
+  const tot = pairs.reduce((s, p) => s + p[1], 0); if (!tot) return [];
+  const raw = pairs.map(([i, v]) => [i, v / tot * n]);
+  const out = raw.map(([i, v]) => [i, Math.floor(v), v - Math.floor(v)]);
+  let left = n - out.reduce((s, o) => s + o[1], 0);
+  [...out].sort((a, b) => b[2] - a[2]).slice(0, left).forEach(o => o[1]++);
+  return out.filter(o => o[1] > 0).map(o => [o[0], o[1]]);
+}
+
+/* ---------------- the wall ---------------- */
+const ROWS = 30;
+let wallGeo = null;
+function drawWall() {
+  const cv = $("#wallCanvas"), wpx = cv.parentElement.clientWidth;
+  const ncol = LAST - FIRST + 1, left = 34, cell = Math.max(6, Math.floor((wpx - left) / ncol));
+  const H = ROWS * cell + 44;
+  const [g, w] = fitCanvas(cv, H);
+  const x0 = left + Math.floor((w - left - cell * ncol) / 2), top = 18;
+  g.clearRect(0, 0, w, H);
+  g.font = "700 11px Nunito, sans-serif"; g.textBaseline = "middle";
+  for (let yi = 0; yi < ncol; yi++) {
+    const y = FIRST + yi, r = yrow(y), x = x0 + yi * cell;
+    if (!r.sets) { g.strokeStyle = css("--rule"); g.setLineDash([2, 3]); g.strokeRect(x + .5, top + .5, cell - 1, ROWS * cell - 1); g.setLineDash([]); continue; }
+    const sh = yearShares(r);
+    const alloc = allocate([...sh.entries()].sort((a, b) => a[0] - b[0]), ROWS);
+    let row = 0; const alpha = r.sets < 20 ? .42 : 1;
+    for (const [ci, n] of alloc) for (let k = 0; k < n; k++, row++) studCell(g, x, top + (ROWS - 1 - row) * cell, cell, C[ci].hex, alpha);
+  }
+  g.fillStyle = css("--ink3"); g.textAlign = "center";
+  for (let y = 1950; y <= LAST; y += 10) g.fillText(String(y), x0 + (y - FIRST + .5) * cell, top + ROWS * cell + 14);
+  g.textAlign = "right";
+  [0, .5, 1].forEach(f => g.fillText(Math.round(f * 100) + "%", x0 - 6, top + ROWS * cell * (1 - f)));
+  // annotate 2004
+  const ax = x0 + (2004 - FIRST + .5) * cell;
+  g.strokeStyle = css("--ink"); g.lineWidth = 2; g.beginPath(); g.moveTo(ax, 2); g.lineTo(ax, top - 3); g.stroke();
+  g.textAlign = ax > w - 140 ? "right" : "left"; g.fillStyle = css("--ink"); g.font = "800 11.5px Nunito, sans-serif";
+  g.fillText("2004: the grey switch", ax + 6, 8);
+  wallGeo = { x0, top, cell, ncol };
+}
+function wallHover(e) {
+  if (!wallGeo) return;
+  const cv = $("#wallCanvas"), b = cv.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top;
+  const yi = Math.floor((x - wallGeo.x0) / wallGeo.cell);
+  if (yi < 0 || yi >= wallGeo.ncol || y < wallGeo.top || y > wallGeo.top + ROWS * wallGeo.cell) return hideTip();
+  const r = yrow(FIRST + yi);
+  if (!r.sets) return showTip(`<div class="t">${r.y}</div><div class="m">No sets with parts lists</div>`, e.clientX, e.clientY);
+  const sh = [...yearShares(r).entries()].sort((a, b) => b[1] - a[1]);
+  const shown = sh.filter(s => s[1] >= .01).slice(0, 12);
+  const rest = sh.length - shown.length;
+  showTip(`<div class="t">${r.y}${r.y === LAST ? " (so far)" : ""}</div><div class="m">${fmt(r.sets)} sets · ${fmt(r.pieces)} pieces · ${sh.length} colours</div>` +
+    shown.map(([i, v]) => tipRow(C[i].hex, C[i].name, pct(v, 1))).join("") +
+    (rest ? `<div class="m" style="margin-top:3px">+ ${rest} more under 1%</div>` : ""), e.clientX, e.clientY);
+}
+$("#wallCanvas").addEventListener("pointermove", wallHover);
+$("#wallCanvas").addEventListener("pointerleave", hideTip);
+
+/* ---------------- step 1: swap lines ---------------- */
+const SWAPS = {
+  lineLight: ["Light Gray", "Light Bluish Gray"],
+  lineDark: ["Dark Gray", "Dark Bluish Gray"],
+  lineBrown: ["Brown", "Reddish Brown"],
+};
+const SW0 = 1996, SW1 = 2012;
+const lineGeo = {};
+function drawLines() {
+  for (const id in SWAPS) {
+    const cv = $("#" + id), [g, w] = fitCanvas(cv, 190), H = 190;
+    const [oldN, newN] = SWAPS[id];
+    const ys = []; for (let y = SW0; y <= SW1; y++) ys.push(y);
+    const val = (y, n) => shareOf(y, [n]);
+    const max = Math.max(...ys.flatMap(y => [val(y, oldN), val(y, newN)])) * 1.12;
+    const L = 38, R = 18, Tp = 14, B = 26, pw = w - L - R, ph = H - Tp - B;
+    const X = y => L + (y - SW0) / (SW1 - SW0) * pw, Yp = v => Tp + ph - v / max * ph;
+    g.clearRect(0, 0, w, H);
+    g.font = "700 11px Nunito, sans-serif"; g.fillStyle = css("--ink3"); g.strokeStyle = css("--rule"); g.lineWidth = 1;
+    const step = max > .2 ? .1 : max > .08 ? .04 : .02;
+    g.textAlign = "right"; g.textBaseline = "middle";
+    for (let v = 0; v <= max; v += step) { g.beginPath(); g.moveTo(L, Yp(v) + .5); g.lineTo(w - R, Yp(v) + .5); g.stroke(); g.fillText(Math.round(v * 100) + "%", L - 6, Yp(v)); }
+    g.textAlign = "center";
+    [2000, 2004, 2008, 2012].forEach(y => g.fillText(String(y), X(y), H - 10));
+    g.strokeStyle = css("--ink"); g.setLineDash([3, 4]); g.beginPath(); g.moveTo(X(2004) + .5, Tp); g.lineTo(X(2004) + .5, Tp + ph); g.stroke(); g.setLineDash([]);
+    const path = (n, dash, col) => {
+      g.strokeStyle = col; g.lineWidth = 2.5; g.setLineDash(dash); g.lineJoin = "round"; g.beginPath();
+      ys.forEach((y, k) => k ? g.lineTo(X(y), Yp(val(y, n))) : g.moveTo(X(y), Yp(val(y, n)))); g.stroke(); g.setLineDash([]);
+    };
+    path(oldN, [5, 4], css("--ink3")); path(newN, [], css("--ink"));
+    lineGeo[id] = { X, Yp, L, pw, ys, oldN, newN, val, Tp, ph, g, w, H };
+  }
+}
+for (const id in SWAPS) {
+  const cv = $("#" + id);
+  cv.addEventListener("pointermove", e => {
+    const G = lineGeo[id]; if (!G) return;
+    const b = cv.getBoundingClientRect(), x = e.clientX - b.left;
+    const y = Math.round(SW0 + (x - G.L) / G.pw * (SW1 - SW0));
+    if (y < SW0 || y > SW1) return hideTip();
+    drawLines();
+    const g = G.g; g.strokeStyle = css("--ink3"); g.lineWidth = 1; g.beginPath(); g.moveTo(G.X(y) + .5, G.Tp); g.lineTo(G.X(y) + .5, G.Tp + G.ph); g.stroke();
+    [[G.oldN, css("--ink3")], [G.newN, css("--ink")]].forEach(([n, col]) => {
+      g.fillStyle = byName[n].hex; g.strokeStyle = css("--card"); g.lineWidth = 2;
+      g.beginPath(); g.arc(G.X(y), G.Yp(G.val(y, n)), 5, 0, 7); g.fill(); g.stroke();
+      g.strokeStyle = col; g.lineWidth = 1.5; g.beginPath(); g.arc(G.X(y), G.Yp(G.val(y, n)), 6.5, 0, 7); g.stroke();
+    });
+    showTip(`<div class="t">${y}</div>` + tipRow(byName[G.oldN].hex, G.oldN, pct(G.val(y, G.oldN), 1)) + tipRow(byName[G.newN].hex, G.newN, pct(G.val(y, G.newN), 1)), e.clientX, e.clientY);
+  });
+  cv.addEventListener("pointerleave", () => { hideTip(); drawLines(); });
+}
+function partRow(names, text) {
+  return `<div class="partrow">${names.map((n, k) => (k ? '<span class="arrowto">→</span>' : "") + `<span class="brick sm" style="--c:${byName[n].hex}" title="${n}"></span>`).join("")}<div class="nm">${text}</div></div>`;
+}
+$("#swapParts").innerHTML = Object.values(SWAPS).map(([o, n]) =>
+  partRow([o, n], `<b>${o}</b> ${pct(shareOf(2003, [o]), 1)} in 2003 → <b>${n}</b> ${pct(shareOf(2006, [n]), 1)} in 2006`)).join("");
+
+/* ---------------- step 2: palette size ---------------- */
+let palGeo = null;
+function drawPalette() {
+  const cv = $("#palCanvas"), wpx = cv.parentElement.clientWidth;
+  const ncol = LAST - FIRST + 1, L = 34, cell = Math.max(6, Math.floor((wpx - L) / ncol));
+  const big = C.filter(c => c.pieces >= 100);
+  const arrivals = {}, departures = {};
+  big.forEach(c => { (arrivals[c.first] = arrivals[c.first] || []).push(c); if (c.last <= 2023) (departures[c.last] = departures[c.last] || []).push(c); });
+  const maxA = Math.max(...Object.values(arrivals).map(a => a.length)), maxD = Math.max(...Object.values(departures).map(a => a.length));
+  const maxCount = Math.max(...Y.map(palCount));
+  const bh = 4, barH = maxCount * bh + 8, sep = 34, studS = Math.max(5, cell - 1);
+  const H = 16 + barH + sep + (maxA + maxD) * studS + 30;
+  const [g, w] = fitCanvas(cv, H);
+  const x0 = L + Math.floor((w - L - cell * ncol) / 2);
+  g.clearRect(0, 0, w, H);
+  const base = 16 + barH;
+  g.font = "700 11px Nunito, sans-serif"; g.fillStyle = css("--ink3"); g.textAlign = "right"; g.textBaseline = "middle";
+  g.strokeStyle = css("--rule"); g.lineWidth = 1;
+  for (let v = 0; v <= maxCount; v += 20) { g.beginPath(); g.moveTo(x0, base - v * bh + .5); g.lineTo(x0 + ncol * cell, base - v * bh + .5); g.stroke(); g.fillText(String(v), x0 - 6, base - v * bh); }
+  for (let yi = 0; yi < ncol; yi++) {
+    const r = Y[yi]; if (!r.pieces) continue;
+    const cols = r.c.filter(c => c[1] / r.pieces >= MEANINGFUL).map(c => c[0]).sort((a, b) => a - b);
+    const x = x0 + yi * cell, a = r.sets < 20 ? .42 : 1;
+    g.globalAlpha = a;
+    cols.forEach((ci, k) => { g.fillStyle = C[ci].hex; g.fillRect(x + .5, base - (k + 1) * bh + .5, cell - 1, bh - 1); });
+    g.globalAlpha = 1;
+  }
+  // axis for arrivals/departures
+  const axisY = base + sep + maxA * studS;
+  g.fillStyle = css("--ink"); g.fillRect(x0, axisY - 1, ncol * cell, 2);
+  g.textAlign = "left"; g.font = "800 11.5px Nunito, sans-serif";
+  g.fillText("colours in use ↑", x0 + 4, 8);
+  g.fillText("first appeared ↑", x0 + 4, axisY - maxA * studS + 2);
+  g.fillText("last appeared ↓", x0 + 4, axisY + maxD * studS - 2);
+  const hits = [];
+  for (let yi = 0; yi < ncol; yi++) {
+    const y = FIRST + yi, x = x0 + yi * cell + (cell - studS) / 2;
+    (arrivals[y] || []).sort((a, b) => a.i - b.i).forEach((c, k) => { const yy = axisY - 3 - (k + 1) * studS; studCell(g, x, yy, studS, c.hex); hits.push([x, yy, studS, c, "arrived"]); });
+    (departures[y] || []).sort((a, b) => a.i - b.i).forEach((c, k) => { const yy = axisY + 3 + k * studS; studCell(g, x, yy, studS, c.hex); hits.push([x, yy, studS, c, "retired"]); });
+  }
+  g.fillStyle = css("--ink3"); g.font = "700 11px Nunito, sans-serif"; g.textAlign = "center";
+  for (let y = 1950; y <= LAST; y += 10) g.fillText(String(y), x0 + (y - FIRST + .5) * cell, H - 10);
+  palGeo = { x0, cell, ncol, base, barH, hits };
+}
+$("#palCanvas").addEventListener("pointermove", e => {
+  if (!palGeo) return;
+  const b = e.currentTarget.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top;
+  const h = palGeo.hits.find(([hx, hy, s]) => x >= hx && x < hx + s && y >= hy && y < hy + s);
+  if (h) { const c = h[3]; return showTip(`<div class="t">${c.name}</div>` + tipRow(c.hex, "in use", `${c.first}–${c.last}`) + `<div class="m">${fmt(c.pieces)} pieces in ${fmt(c.sets)} sets</div>`, e.clientX, e.clientY); }
+  if (y <= palGeo.base + 4) {
+    const yi = Math.floor((x - palGeo.x0) / palGeo.cell); if (yi < 0 || yi >= palGeo.ncol) return hideTip();
+    const r = Y[yi]; if (!r.pieces) return hideTip();
+    return showTip(`<div class="t">${r.y}</div><div class="r">Colours ≥ 0.1% of pieces<span class="v">${palCount(r)}</span></div><div class="r">Any piece at all<span class="v">${r.c.length}</span></div><div class="m">${fmt(r.sets)} sets</div>`, e.clientX, e.clientY);
+  }
+  hideTip();
+});
+$("#palCanvas").addEventListener("pointerleave", hideTip);
+(function palParts() {
+  const at = y => palCount(yrow(y));
+  const rows = [[1975, at(1975)], [K.peak[0], K.peak[1]], [K.low[0], K.low[1]], [LASTFULL, at(LASTFULL)]];
+  $("#palParts").innerHTML = rows.map(([y, n]) => {
+    const r = yrow(y), top = r.c.slice().sort((a, b) => b[1] - a[1]).slice(0, 4);
+    return `<div class="partrow"><div class="x">${n}<small>×</small></div><div class="nm"><b>${y}</b><div style="display:flex;gap:4px;margin-top:2px">${top.map(c => `<span class="brick sm" style="--c:${C[c[0]].hex}" title="${C[c[0]].name}"></span>`).join("")}</div></div></div>`;
+  }).join("");
+})();
+
+/* ---------------- step 3: families ---------------- */
+const FAM0 = 1958;
+let famGeo = null;
+$("#famLegend").innerHTML = FAMS.map(f => `<span><i style="background:${f.col}"></i>${f.label}</span>`).join("");
+function drawFamilies() {
+  const cv = $("#famCanvas"), wpx = cv.parentElement.clientWidth;
+  const ncol = LAST - FAM0 + 1, L = 34, R = 120, cell = Math.max(6, Math.floor((wpx - L - R) / ncol)), H = 300;
+  const [g, w] = fitCanvas(cv, H);
+  const x0 = L, Tp = 10, ph = H - Tp - 28;
+  g.clearRect(0, 0, w, H);
+  g.font = "700 11px Nunito, sans-serif"; g.fillStyle = css("--ink3"); g.textAlign = "right"; g.textBaseline = "middle";
+  [0, .25, .5, .75, 1].forEach(f => g.fillText(Math.round(f * 100) + "%", x0 - 6, Tp + ph * (1 - f)));
+  let lastShares = null;
+  for (let yi = 0; yi < ncol; yi++) {
+    const r = yrow(FAM0 + yi); if (!r.sets) continue;
+    const sh = famShares([r]); if (r.y === LASTFULL) lastShares = sh;
+    let acc = 0; const x = x0 + yi * cell;
+    g.globalAlpha = r.sets < 20 ? .42 : 1;
+    for (const f of FAMS) {
+      const h = sh[f.k] * ph; if (h <= 0) continue;
+      const yTop = Tp + ph - (acc + sh[f.k]) * ph;
+      g.fillStyle = f.col; g.fillRect(x + 1, yTop + 1, cell - 2, Math.max(0, h - 2));
+      acc += sh[f.k];
+    }
+    g.globalAlpha = 1;
+  }
+  g.textAlign = "center"; g.fillStyle = css("--ink3");
+  for (let y = 1960; y <= LAST; y += 10) g.fillText(String(y), x0 + (y - FAM0 + .5) * cell, H - 10);
+  // direct labels at the last complete year
+  if (lastShares) {
+    let acc = 0; g.textAlign = "left"; g.font = "800 11.5px Nunito, sans-serif";
+    const xr = x0 + ncol * cell + 8; let lastY = -99;
+    for (const f of FAMS) {
+      const mid = Tp + ph - (acc + lastShares[f.k] / 2) * ph; acc += lastShares[f.k];
+      if (lastShares[f.k] < .015) continue;
+      const yy = Math.max(mid, lastY + 13); lastY = yy;
+      g.fillStyle = css("--ink2"); g.fillText(`${f.short} ${pct(lastShares[f.k])}`, xr, yy);
+    }
+  }
+  famGeo = { x0, cell, ncol, Tp, ph };
+}
+$("#famCanvas").addEventListener("pointermove", e => {
+  if (!famGeo) return;
+  const b = e.currentTarget.getBoundingClientRect(), yi = Math.floor((e.clientX - b.left - famGeo.x0) / famGeo.cell);
+  if (yi < 0 || yi >= famGeo.ncol) return hideTip();
+  const r = yrow(FAM0 + yi); if (!r.sets) return hideTip();
+  const sh = famShares([r]);
+  showTip(`<div class="t">${r.y}</div><div class="m">${fmt(r.sets)} sets</div>` + FAMS.slice().reverse().map(f => tipRow(f.col, f.label, pct(sh[f.k], 1))).join(""), e.clientX, e.clientY);
+});
+$("#famCanvas").addEventListener("pointerleave", hideTip);
+function famTable() {
+  const decs = []; for (let d = 1950; d <= 2020; d += 10) decs.push(d);
+  $("#famTable").innerHTML = `<tr><th>Decade</th>${FAMS.map(f => `<th>${f.label}</th>`).join("")}</tr>` +
+    decs.map(d => { const s = famShares(decadeRows(d)); return `<tr><td>${d}s</td>${FAMS.map(f => `<td>${pct(s[f.k], 1)}</td>`).join("")}</tr>`; }).join("");
+}
+
+/* ---------------- step 4: themes ---------------- */
+const THEMES = DATA.themes.map(t => {
+  const tot = t.pieces, share = k => t.c.filter(c => C[c[0]].fam === k).reduce((s, c) => s + c[1], 0) / tot;
+  const H = -t.c.reduce((s, c) => { const p = c[1] / tot; return s + p * Math.log(p); }, 0);
+  return { ...t, grey: share("grey"), classic: share("classic"), variety: Math.exp(H) };
+});
+(function themeK() {
+  const g = THEMES.slice().sort((a, b) => b.grey - a.grey);
+  K.greyestTheme = g[0].name; K.greyestShare = pct(g[0].grey);
+  K.leastGreyTheme = g[g.length - 1].name; K.leastGreyShare = pct(g[g.length - 1].grey, 1);
+  K.primaryThemes = THEMES.slice().sort((a, b) => b.classic - a.classic).slice(0, 3).map(t => t.name).join(", ").replace(/, ([^,]*)$/, " and $1");
+})();
+let THEME_SORT = "grey";
+function drawThemes() {
+  const sorters = { grey: (a, b) => b.grey - a.grey, classic: (a, b) => b.classic - a.classic, variety: (a, b) => b.variety - a.variety, from: (a, b) => a.from - b.from || b.pieces - a.pieces };
+  const list = THEMES.slice().sort(sorters[THEME_SORT]);
+  const stat = THEME_SORT === "classic" ? ["classic", t => pct(t.classic)] : THEME_SORT === "variety" ? ["colours", t => t.variety.toFixed(0)] : ["grey", t => pct(t.grey)];
+  $("#themes").innerHTML = list.map((t, ti) => {
+    let rest = 0; const segs = [];
+    for (const [ci, p] of t.c) { const s = p / t.pieces; if (s >= .004) segs.push([ci, s]); else rest += s; }
+    segs.sort((a, b) => a[0] - b[0]);
+    return `<div class="trow"><div class="tn">${t.name}<small>${t.from}–${t.to} · ${fmt(t.sets)} sets</small></div>
+      <div class="strip" data-t="${DATA.themes.indexOf(DATA.themes.find(x => x.name === t.name))}">${segs.map(([ci, s]) => `<span data-ci="${ci}" style="width:${(s * 100).toFixed(3)}%;background:${C[ci].hex}"></span>`).join("")}${rest > 0 ? `<span class="rest" data-rest="${rest}" style="width:${(rest * 100).toFixed(3)}%"></span>` : ""}</div>
+      <div class="gv">${stat[1](t)}<small>${stat[0]}</small></div></div>`;
+  }).join("");
+}
+$("#themes").addEventListener("pointermove", e => {
+  const sp = e.target.closest(".strip span"); if (!sp) return hideTip();
+  const t = DATA.themes[+sp.parentElement.dataset.t];
+  if (sp.dataset.rest) return showTip(`<div class="t">${t.name}</div><div class="m">${pct(+sp.dataset.rest, 1)} of pieces in colours under 0.4% each</div>`, e.clientX, e.clientY);
+  const ci = +sp.dataset.ci, p = t.c.find(c => c[0] === ci)[1];
+  showTip(`<div class="t">${t.name}</div>` + tipRow(C[ci].hex, C[ci].name, pct(p / t.pieces, 1)) + `<div class="m">${fmt(p)} pieces</div>`, e.clientX, e.clientY);
+});
+$("#themes").addEventListener("pointerleave", hideTip);
+$$("[data-sort]").forEach(b => b.addEventListener("click", () => {
+  THEME_SORT = b.dataset.sort; $$("[data-sort]").forEach(x => x.setAttribute("aria-pressed", x === b)); drawThemes();
+}));
+
+/* ---------------- step 5: set finder ---------------- */
+const numIndex = new Map(S.num.map((n, i) => [n, i]));
+const lowerNames = S.name.map(n => n.toLowerCase());
+const slots = { A: null, B: null };
+function setInfo(i) {
+  const parts = S.parts(i), total = parts.reduce((s, p) => s + p[1], 0);
+  return { i, num: S.num[i], name: S.name[i], year: FIRST + S.year[i], theme: T.themeNames[S.theme[i]], parts, total };
+}
+function miniStrip(parts, total) {
+  return `<div class="mini-strip">${parts.slice().sort((a, b) => a[0] - b[0]).map(([ci, q]) => `<span style="width:${q / total * 100}%;background:${C[ci].hex}"></span>`).join("")}</div>`;
+}
+function search(q) {
+  q = q.trim().toLowerCase();
+  let idx = [];
+  if (!q) idx = PAIRS.flatMap(p => p.sets).map(n => numIndex.get(n)).filter(i => i != null);
+  else {
+    const toks = q.split(/\s+/);
+    for (let i = 0; i < S.n && idx.length < 400; i++) {
+      const n = S.num[i].toLowerCase();
+      if (toks.every(t => lowerNames[i].includes(t) || n.startsWith(t))) idx.push(i);
+    }
+    const exact = numIndex.get(q) ?? numIndex.get(q + "-1");
+    if (exact != null) idx = [exact, ...idx.filter(i => i !== exact)];
+    idx.sort((a, b) => (S.num[b].toLowerCase().startsWith(q) - S.num[a].toLowerCase().startsWith(q)) || (S.off[b + 1] - S.off[b]) - (S.off[a + 1] - S.off[a]));
+  }
+  const res = idx.slice(0, 60).map(setInfo);
+  $("#results").innerHTML = res.length ? res.map(s => `<div class="res${slots.A && slots.A.i === s.i ? " sel" : ""}">
+    <button class="main" data-pick="${s.i}"><div class="rn">${s.name}</div><div class="rm">${s.num} · ${s.year} · ${fmt(s.total)} pcs</div>${miniStrip(s.parts, s.total)}</button>
+    <button class="cmp" data-cmp="${s.i}" aria-label="Compare ${s.name.replace(/"/g, "")}">compare</button></div>`).join("")
+    : `<p class="note">No sets match.</p>`;
+}
+function drawSlot(key) {
+  const el = $("#slot" + key), s = slots[key];
+  if (!s) {
+    el.className = "slot";
+    el.innerHTML = `<p class="empty">${key === "A" ? "Pick a set from the list." : "Press <b>compare</b> on any result to put it here."}</p>`;
+    return;
+  }
+  el.className = "slot full";
+  const sorted = s.parts.slice().sort((a, b) => b[1] - a[1]);
+  const grey = s.parts.filter(p => C[p[0]].fam === "grey").reduce((a, p) => a + p[1], 0) / s.total;
+  const yr = yrow(s.year), yGrey = famShares([yr], "pieces").grey;
+  el.innerHTML = `<button class="clear" data-clear="${key}">clear</button><div class="sh">${s.name}</div>
+    <div class="sm">${s.num} · ${s.year} · ${s.theme} · <a href="https://rebrickable.com/sets/${encodeURIComponent(s.num)}/" target="_blank" rel="noopener">Rebrickable ↗</a></div>
+    <canvas aria-label="Tray of ${s.total} pieces by colour"></canvas>
+    <div class="stat"><b>${fmt(s.total)}</b> pieces in <b>${s.parts.length}</b> colours. Greys are <b>${pct(grey)}</b> of this set; ${s.year} sets average ${pct(yGrey)}.</div>
+    <div class="plist">${sorted.map(([ci, q]) => `<div class="pl"><b>${fmt(q)}x</b><span class="brick sm" style="--c:${C[ci].hex}"></span>${C[ci].name}</div>`).join("")}</div>`;
+  const cv = $("canvas", el), cells = Math.min(400, s.total);
+  const cols = Math.min(20, Math.max(8, Math.ceil(Math.sqrt(cells * 1.6))));
+  const wpx = cv.parentElement.clientWidth, sz = Math.floor(Math.min(wpx / cols, 22)), rows = Math.ceil(cells / cols);
+  const [g] = fitCanvas(cv, rows * sz);
+  const alloc = allocate(sorted, cells);
+  let k = 0;
+  for (const [ci, n] of alloc) for (let j = 0; j < n; j++, k++) studCell(g, (k % cols) * sz, Math.floor(k / cols) * sz, sz, C[ci].hex);
+}
+const PAIRS = [
+  { label: "Galaxy Explorer, 1979 vs 2022", sets: ["497-1", "10497-1"] },
+  { label: "Millennium Falcon UCS, 2007 vs 2017", sets: ["10179-1", "75192-1"] },
+  { label: "Castle, 1978 vs 2022", sets: ["375-2", "10305-1"] },
+  { label: "King's Castle 1984 vs Black Knight's 1992", sets: ["6080-1", "6086-1"] },
+].filter(p => p.sets.every(n => numIndex.has(n)));
+$("#pairs").innerHTML = `<span class="lbl" style="font-weight:700;font-size:13px;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;align-self:center">Then &amp; now</span>` +
+  PAIRS.map((p, k) => `<button class="bbtn" data-pair="${k}" aria-pressed="${k === 0}">${p.label}</button>`).join("");
+function loadPair(k) {
+  const p = PAIRS[k]; if (!p) return;
+  slots.A = setInfo(numIndex.get(p.sets[0])); slots.B = setInfo(numIndex.get(p.sets[1]));
+  $$("[data-pair]").forEach(b => b.setAttribute("aria-pressed", +b.dataset.pair === k));
+  drawSlot("A"); drawSlot("B"); search($("#q").value);
+}
+$("#pairs").addEventListener("click", e => { const b = e.target.closest("[data-pair]"); if (b) loadPair(+b.dataset.pair); });
+$("#results").addEventListener("click", e => {
+  const pick = e.target.closest("[data-pick]"), cmp = e.target.closest("[data-cmp]");
+  if (pick) { slots.A = setInfo(+pick.dataset.pick); drawSlot("A"); }
+  if (cmp) { slots.B = setInfo(+cmp.dataset.cmp); drawSlot("B"); }
+  if (pick || cmp) { $$("[data-pair]").forEach(b => b.setAttribute("aria-pressed", "false")); search($("#q").value); }
+});
+$(".slots").addEventListener("click", e => { const c = e.target.closest("[data-clear]"); if (c) { slots[c.dataset.clear] = null; drawSlot(c.dataset.clear); search($("#q").value); } });
+let qTimer; $("#q").addEventListener("input", e => { clearTimeout(qTimer); qTimer = setTimeout(() => search(e.target.value), 90); });
+
+/* ---------------- wiring ---------------- */
+$$("[data-k]").forEach(el => { if (K[el.dataset.k] != null) el.textContent = K[el.dataset.k]; });
+$$("[data-weight]").forEach(b => b.addEventListener("click", () => {
+  WEIGHT = b.dataset.weight; $$("[data-weight]").forEach(x => x.setAttribute("aria-pressed", x.dataset.weight === WEIGHT));
+  drawWall(); drawFamilies();
+}));
+function drawAll() { drawWall(); drawLines(); drawPalette(); drawFamilies(); drawSlot("A"); drawSlot("B"); }
+famTable(); drawThemes(); loadPair(0); drawAll();
+let rsz; new ResizeObserver(() => { clearTimeout(rsz); rsz = setTimeout(drawAll, 120); }).observe($(".wrap"));
+new MutationObserver(drawAll).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", drawAll);
+
+/* =================================================================
+   The house behind the page: three.js, built from 1x1 cells merged
+   into bricks, assembled and turned by scroll, repainted by era.
+   ================================================================= */
+const ERAS = {
+  "1978": { label: "1978", roles: { base: "Green", found: "Black", wall: "White", corner: "Red", door: "Blue", roof: "Red", chimney: "Black", trunk: "Brown", leaf: "Green", path: "Yellow", f1: "Red", f2: "Yellow", window: "Trans-Clear" } },
+  "1990": { label: "1990", roles: { base: "Green", found: "Light Gray", wall: "White", corner: "Light Gray", door: "Red", roof: "Black", chimney: "Dark Gray", trunk: "Brown", leaf: "Green", path: "Dark Gray", f1: "Red", f2: "Yellow", window: "Trans-Clear" } },
+  "2003": { label: "2003", roles: { base: "Green", found: "Light Gray", wall: "Tan", corner: "Dark Gray", door: "Brown", roof: "Dark Gray", chimney: "Light Gray", trunk: "Brown", leaf: "Green", path: "Light Gray", f1: "Red", f2: "White", window: "Trans-Clear" } },
+  "2005": { label: "2005", roles: { base: "Green", found: "Light Bluish Gray", wall: "Tan", corner: "Dark Bluish Gray", door: "Reddish Brown", roof: "Dark Bluish Gray", chimney: "Light Bluish Gray", trunk: "Reddish Brown", leaf: "Green", path: "Light Bluish Gray", f1: "Red", f2: "White", window: "Trans-Clear" } },
+  "2024": { label: "2024", roles: { base: "Green", found: "Dark Bluish Gray", wall: "Sand Green", corner: "White", door: "Dark Blue", roof: "Dark Red", chimney: "Medium Nougat", trunk: "Reddish Brown", leaf: "Dark Green", path: "Tan", f1: "Coral", f2: "Lavender", window: "Trans-Clear" } },
+};
+const hexOf = n => (byName[n] || { hex: "#888888" }).hex;
+let ERA = "1978";
+function eraSwatches(era) {
+  const r = ERAS[era].roles, names = [...new Set([r.wall, r.roof, r.corner, r.found, r.door, r.trunk])];
+  $("#eraName").textContent = ERAS[era].label;
+  $("#eraSw").innerHTML = names.map(n => `<i style="background:${hexOf(n)}" title="${n}"></i>`).join("");
+}
+
+function buildModel() {
+  const cells = new Map(); // "x,l,z" -> {role, kind:'brick'|'plate'|'tile'}
+  const put = (x, l, z, role, kind = "brick") => cells.set(`${x},${l},${z}`, { x, l, z, role, kind });
+  // house walls: x 3..10, z 4..9, levels 0..5
+  const X0 = 3, X1 = 10, Z0 = 4, Z1 = 9;
+  for (let l = 0; l <= 5; l++) for (let x = X0; x <= X1; x++) for (let z = Z0; z <= Z1; z++) {
+    const edge = x === X0 || x === X1 || z === Z0 || z === Z1; if (!edge) continue;
+    const corner = (x === X0 || x === X1) && (z === Z0 || z === Z1);
+    let role = l === 0 ? "found" : l === 5 ? "corner" : corner ? "corner" : "wall";
+    if (z === Z1 && (x === 6 || x === 7) && l <= 3) role = l === 0 ? "found" : "door";
+    const win = (l === 2 || l === 3) && (
+      (z === Z1 && (x === 4 || x === 5 || x === 8 || x === 9)) ||
+      (z === Z0 && (x === 6 || x === 7)) ||
+      ((x === X0 || x === X1) && (z === 6 || z === 7)));
+    if (win) role = "window";
+    put(x, l, z, role);
+  }
+  // stepped gable roof, ridge along x
+  for (let k = 0; k < 4; k++) for (let x = X0 - 1; x <= X1 + 1; x++) for (let z = Z0 - 1 + k; z <= Z1 + 1 - k; z++) put(x, 6 + k, z, "roof");
+  for (let l = 7; l <= 10; l++) put(9, l, 5, "chimney");
+  // tree
+  for (let l = 0; l <= 2; l++) put(13, l, 12, "trunk");
+  for (let l = 3; l <= 4; l++) for (let x = 12; x <= 14; x++) for (let z = 11; z <= 13; z++) put(x, l, z, "leaf");
+  [[13, 12], [12, 12], [14, 12], [13, 11], [13, 13]].forEach(([x, z]) => put(x, 5, z, "leaf"));
+  put(13, 6, 12, "leaf");
+  // path tiles and flowers (plates sit at level 0 but are low)
+  for (let z = 10; z <= 15; z++) for (const x of [6, 7]) put(x, 0, z, "path", "tile");
+  [[3, 10, "f1"], [4, 10, "leaf"], [5, 10, "f2"], [8, 10, "f2"], [9, 10, "leaf"], [10, 10, "f1"], [2, 13, "f2"], [1, 11, "f1"]].forEach(([x, z, r]) => put(x, 0, z, r, "plate"));
+
+  // merge runs into bricks; alternate direction by level for a running bond
+  const bricks = [], taken = new Set();
+  const keys = [...cells.values()].sort((a, b) => a.l - b.l || a.z - b.z || a.x - b.x);
+  for (const c of keys) {
+    const key = `${c.x},${c.l},${c.z}`; if (taken.has(key)) continue;
+    const same = (x, z) => { const o = cells.get(`${x},${c.l},${z}`); return o && !taken.has(`${x},${c.l},${z}`) && o.role === c.role && o.kind === c.kind; };
+    const dirs = c.l % 2 ? [[0, 1], [1, 0]] : [[1, 0], [0, 1]];
+    let best = [[c.x, c.z]];
+    for (const [dx, dz] of dirs) {
+      const run = [[c.x, c.z]];
+      const maxLen = c.kind === "brick" ? ((c.x + c.z + c.l) % 3 === 0 ? 2 : 4) : 2;
+      while (run.length < maxLen && same(c.x + dx * run.length, c.z + dz * run.length)) run.push([c.x + dx * run.length, c.z + dz * run.length]);
+      if (run.length > best.length) best = run;
+      if (best.length > 1) break;
+    }
+    best.forEach(([x, z]) => taken.add(`${x},${c.l},${z}`));
+    bricks.push({ cells: best, l: c.l, role: c.role, kind: c.kind });
+  }
+  return { bricks, cells };
+}
+
+function startThree() {
+  if (typeof THREE === "undefined") return;
+  const canvas = $("#stage");
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true }); } catch (e) { return; }
+  const hud = $("#hud"); hud.hidden = false;
+  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(28, 1, 1, 400);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x9a9488, 0.75));
+  const sun = new THREE.DirectionalLight(0xffffff, 0.85);
+  sun.position.set(18, 34, 22); sun.castShadow = true;
+  sun.shadow.mapSize.set(1024, 1024);
+  Object.assign(sun.shadow.camera, { left: -16, right: 16, top: 16, bottom: -16, near: 1, far: 90 });
+  scene.add(sun);
+  const amb = new THREE.AmbientLight(0xffffff, 0.18); scene.add(amb);
+
+  const BH = 1.2, PH = 0.4, GAP = 0.05;
+  const model = buildModel();
+  const root = new THREE.Group(); scene.add(root);
+  root.position.set(-8, 0, -8);
+
+  // baseplate
+  const plateMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .45 });
+  const base = new THREE.Mesh(new THREE.BoxGeometry(16 - GAP, PH, 16 - GAP), plateMat);
+  base.position.set(8, PH / 2, 8); base.receiveShadow = true; root.add(base);
+
+  const bodyGeo = new THREE.BoxGeometry(1, 1, 1);
+  const studGeo = new THREE.CylinderGeometry(0.3, 0.3, 0.2, 18);
+  const opaque = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .32, metalness: 0 });
+  const glass = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .1, transparent: true, opacity: .5, depthWrite: false });
+
+  // occupancy of tops so hidden studs are skipped
+  const occ = new Set(); model.bricks.forEach(b => b.cells.forEach(([x, z]) => occ.add(`${x},${b.l},${z}`)));
+  const baseStuds = []; for (let x = 0; x < 16; x++) for (let z = 0; z < 16; z++) if (!occ.has(`${x},0,${z}`)) baseStuds.push([x, z]);
+
+  const items = model.bricks.map((b, k) => ({ ...b, k, glass: b.role === "window" }));
+  const groups = { opaque: items.filter(b => !b.glass), glass: items.filter(b => b.glass) };
+  const meshes = {};
+  for (const gk of ["opaque", "glass"]) {
+    const list = groups[gk], mat = gk === "glass" ? glass : opaque;
+    let studCount = 0;
+    list.forEach(b => { b.studs = b.kind === "tile" ? [] : b.cells.filter(([x, z]) => !occ.has(`${x},${b.l + 1},${z}`)); studCount += b.studs.length; });
+    const body = new THREE.InstancedMesh(bodyGeo, mat, list.length);
+    const studs = new THREE.InstancedMesh(studGeo, mat, Math.max(1, studCount + (gk === "opaque" ? baseStuds.length : 0)));
+    body.castShadow = studs.castShadow = gk === "opaque"; body.receiveShadow = studs.receiveShadow = true;
+    body.instanceMatrix.setUsage(THREE.DynamicDrawUsage); studs.instanceMatrix.setUsage(THREE.DynamicDrawUsage);
+    // every instance needs a colour before the first render, or a shared material compiled
+    // with instance colours meets a mesh that has none and three.js throws
+    const white = new THREE.Color(1, 1, 1), hidden = new THREE.Matrix4().makeScale(0, 0, 0);
+    for (let i = 0; i < body.count; i++) { body.setColorAt(i, white); body.setMatrixAt(i, hidden); }
+    for (let i = 0; i < studs.count; i++) { studs.setColorAt(i, white); studs.setMatrixAt(i, hidden); }
+    root.add(body); root.add(studs);
+    meshes[gk] = { list, body, studs, studCount };
+  }
+  // base studs are the last instances of the opaque stud mesh
+  const tmp = new THREE.Object3D(), col = new THREE.Color();
+  const N = items.length;
+  items.forEach(b => {
+    const xs = b.cells.map(c => c[0]), zs = b.cells.map(c => c[1]);
+    const h = b.kind === "brick" ? BH : PH;
+    b.w = Math.max(...xs) - Math.min(...xs) + 1; b.d = Math.max(...zs) - Math.min(...zs) + 1;
+    b.cx = (Math.min(...xs) + Math.max(...xs)) / 2 + .5; b.cz = (Math.min(...zs) + Math.max(...zs)) / 2 + .5;
+    b.h = h; b.y = PH + b.l * BH + h / 2;
+    b.cur = new THREE.Color(); b.from = new THREE.Color(); b.to = new THREE.Color(); b.t0 = -1;
+  });
+  const maxL = Math.max(...items.map(b => b.l));
+  // each layer owns an equal slice of build progress, so a layer's bricks have all landed
+  // before the next layer's start falling; targets only ever sit on slice ends
+  const levels = [...new Set(items.map(b => b.l))].sort((a, b) => a - b), nL = levels.length;
+  levels.forEach((l, li) => {
+    const layer = items.filter(b => b.l === l).sort((a, b) => (a.cx + a.cz) - (b.cx + b.cz));
+    layer.forEach((b, k) => { b.start = (li + (k / layer.length) * 0.55) / nL; b.span = 0.45 / nL; });
+  });
+  const layerEnds = levels.map((l, li) => (li + 1) / nL);
+  const buildTarget = raw => layerEnds.find(e => e >= raw - 1e-6) ?? 1;
+
+  function lin(hex) { return new THREE.Color(hex).convertSRGBToLinear(); }
+  function applyEra(era, instant) {
+    ERA = era; eraSwatches(era);
+    const roles = ERAS[era].roles, now = performance.now();
+    plateMat.color.copy(lin(hexOf(roles.base)));
+    items.forEach(b => {
+      const target = lin(hexOf(roles[b.role] || roles.wall));
+      if (b.t0 < 0 || instant || REDUCED) { b.cur.copy(target); b.from.copy(target); b.to.copy(target); b.t0 = 0; return; }
+      if (b.to.equals(target)) return;
+      b.from.copy(b.cur); b.to.copy(target); b.t0 = now + (maxL - b.l) * 55 + ((b.cx * 7 + b.cz * 13) % 9) * 12;
+    });
+    dirty = true;
+  }
+
+  let dirty = true, enabled = true, lastScroll = -1;
+  try { if (localStorage.getItem("bbb-3d") === "off") enabled = false; } catch (e) {}
+  const scrollP = () => { const m = document.documentElement.scrollHeight - innerHeight; return m > 0 ? scrollY / m : 0; };
+  const rawBuild = () => Math.min(1, 0.3 + scrollY / (innerHeight * 1.05) * 0.7);
+  let shownBuild = REDUCED ? 1 : 0, lastT = performance.now();
+
+  function writeInstances(now) {
+    const bp = shownBuild;
+    let animating = false;
+    for (const gk of ["opaque", "glass"]) {
+      const M = meshes[gk]; let si = 0;
+      M.list.forEach((b, i) => {
+        // drop-in: each brick has a window in build progress
+        const e = Math.max(0, Math.min(1, (bp - b.start) / b.span));
+        const ease = 1 - Math.pow(1 - e, 3);
+        const lift = (1 - ease) * 7, s = e > 0 ? 1 : 0.0001;
+        tmp.position.set(b.cx, b.y + lift, b.cz); tmp.scale.set((b.w - GAP) * s, (b.h - GAP / 2) * s, (b.d - GAP) * s); tmp.rotation.set(0, 0, 0); tmp.updateMatrix();
+        M.body.setMatrixAt(i, tmp.matrix);
+        // colour
+        if (b.t0 > 0) {
+          const t = Math.max(0, Math.min(1, (now - b.t0) / 420));
+          b.cur.copy(b.from).lerp(b.to, t);
+          if (t < 1) animating = true; else b.t0 = 0;
+        }
+        M.body.setColorAt(i, b.cur);
+        for (const [x, z] of b.studs) {
+          tmp.position.set(x + .5, b.y + b.h / 2 + .1 + lift, z + .5); tmp.scale.set(s, s, s); tmp.updateMatrix();
+          M.studs.setMatrixAt(si, tmp.matrix); M.studs.setColorAt(si, b.cur); si++;
+        }
+      });
+      if (gk === "opaque") {
+        const bc = plateMat.color;
+        for (const [x, z] of baseStuds) { tmp.position.set(x + .5, PH + .1, z + .5); tmp.scale.set(1, 1, 1); tmp.updateMatrix(); M.studs.setMatrixAt(si, tmp.matrix); M.studs.setColorAt(si, bc); si++; }
+      }
+      M.body.instanceMatrix.needsUpdate = true; M.studs.instanceMatrix.needsUpdate = true;
+      if (M.body.instanceColor) M.body.instanceColor.needsUpdate = true;
+      if (M.studs.instanceColor) M.studs.instanceColor.needsUpdate = true;
+    }
+    return animating;
+  }
+
+  function resize() {
+    const w = innerWidth, h = innerHeight;
+    renderer.setSize(w, h, false); camera.aspect = w / h;
+    // on wide screens push the house to the right of the reading column
+    if (w >= 1100) camera.setViewOffset(w, h, -Math.round(w * 0.2), 0, w, h); else camera.clearViewOffset();
+    camera.updateProjectionMatrix(); dirty = true;
+  }
+  addEventListener("resize", resize); resize();
+
+  let t0 = performance.now(), lastFrame = 0;
+  function frame(now) {
+    requestAnimationFrame(frame);
+    if (!enabled || document.hidden) return;
+    const sp = scrollP();
+    const moving = sp !== lastScroll; lastScroll = sp;
+    const idle = REDUCED ? 0 : (now - t0) / 1000 * 0.05;
+    if (!moving && !dirty && REDUCED) return;
+    if (!moving && !dirty && now - lastFrame < 33) return;
+    lastFrame = now;
+    const dt = Math.min(0.1, (now - lastT) / 1000); lastT = now;
+    if (!REDUCED) {
+      const target = buildTarget(rawBuild()), diff = target - shownBuild;
+      shownBuild = Math.abs(diff) < 0.0005 ? target : shownBuild + diff * Math.min(1, dt * 2.2);
+      if (shownBuild !== target) dirty = true;
+    }
+    const az = (REDUCED ? 0.7 : -0.5 + sp * Math.PI * 2.5 + idle);
+    const el = (REDUCED ? 0.5 : 0.62 - sp * 0.3), dist = innerWidth < 700 ? 64 : 54;
+    camera.position.set(Math.sin(az) * Math.cos(el) * dist, 4 + Math.sin(el) * dist, Math.cos(az) * Math.cos(el) * dist);
+    camera.lookAt(0, 4.2, 0);
+    const anim = writeInstances(now);
+    renderer.render(scene, camera);
+    dirty = anim || (!REDUCED && shownBuild !== buildTarget(rawBuild()));
+  }
+
+  // era markers: the last marker above 60% of the viewport wins
+  const markers = $$("[data-era]");
+  function checkEra() {
+    const line = innerHeight * 0.6; let era = markers[0].dataset.era;
+    for (const m of markers) if (m.getBoundingClientRect().top < line) era = m.dataset.era;
+    if (era !== ERA) applyEra(era);
+  }
+  addEventListener("scroll", checkEra, { passive: true });
+  applyEra("1978", true); checkEra();
+
+  const btn = $("#hudToggle");
+  function setEnabled(on) {
+    enabled = on; canvas.style.display = on ? "block" : "none";
+    btn.textContent = on ? "3D on" : "3D off"; btn.setAttribute("aria-pressed", on); dirty = true;
+    try { localStorage.setItem("bbb-3d", on ? "on" : "off"); } catch (e) {}
+  }
+  btn.addEventListener("click", () => setEnabled(!enabled));
+  setEnabled(enabled);
+  requestAnimationFrame(frame);
+}
+startThree();
+</script>
